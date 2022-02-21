@@ -15,14 +15,13 @@ checkpoint:
 task:
   _name: audio_pretraining
   data: ???
-  max_sample_size: 264600
-  min_sample_size: 88200
-  normalize: false
-  sample_rate: 44100
+  max_sample_size: 320000
+  min_sample_size: 32000
+  normalize: true
 
 dataset:
-  num_workers: 6
   batch_size: 8
+  num_workers: 6
   max_tokens: 3800000
   skip_invalid_size_inputs_valid_test: true
   validate_interval: 5
@@ -30,8 +29,7 @@ dataset:
   disable_validation: true
 
 distributed_training:
-  fp16: true
-  distributed_world_size: 2
+  distributed_world_size: 16
   ddp_backend: legacy_ddp
 
 criterion:
@@ -59,13 +57,13 @@ model:
   _name: data2vec_audio
   extractor_mode: layer_norm
   encoder_layerdrop: 0.05
-  dropout_input: 0.2
-  dropout_features: 0.2
+  dropout_input: 0.0
+  dropout_features: 0.0
   feature_grad_mult: 1.0
-  encoder_embed_dim: 1536
+  encoder_embed_dim: 768
 
-  mask_prob: 0.5
-  mask_length: 30
+  mask_prob: 0.65
+  mask_length: 10
 
   loss_beta: 0
   loss_scale: null
@@ -84,6 +82,3 @@ model:
 
   require_same_masks: true
   mask_dropout: 0
-
-  min_pred_var: 0.001
-  min_target_var: 0.01
